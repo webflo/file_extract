@@ -33,8 +33,13 @@ class TextExtracted extends TypedData {
        */
       $filepath = drupal_realpath($source->getFileUri());
       if ($filepath) {
-        $wrapper = new \TikaWrapper(drupal_realpath($source->getFileUri()));
-        $this->processed = $wrapper->getText();
+        try {
+          $wrapper = new \TikaWrapper(drupal_realpath($source->getFileUri()));
+          $this->processed = $wrapper->getText();
+        }
+        catch (\Exception $e) {
+          $this->processed = NULL;
+        }
       }
     }
 

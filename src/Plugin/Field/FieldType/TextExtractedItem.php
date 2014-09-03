@@ -18,7 +18,8 @@ use Drupal\text\Plugin\Field\FieldType\TextItemBase;
  *   id = "text_extracted",
  *   label = @Translation("Extracted text"),
  *   description = @Translation("An entity field containing text."),
- *   no_ui = TRUE
+ *   no_ui = TRUE,
+ *   list_class = "\Drupal\file_extract\Plugin\Field\FieldType\FileExtractFieldItemList"
  * )
  */
 class TextExtractedItem extends TextItemBase {
