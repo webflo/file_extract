@@ -1,0 +1,15 @@
+{
+  "name": "drupal/file_extract",
+  "type": "drupal-module",
+  "license": "GPL-2.0+",
+  "minimum-stability": "dev",
+  "require": {
+    "marcelomx/tika-client": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/jhariani/tika-client.git"
+    }
+  ]
+}

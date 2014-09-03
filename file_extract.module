@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Extract content from files.
+ */
+use Drupal\Core\Field\FieldDefinition;
+use Drupal\Core\TypedData\DataDefinition;
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+ * @return array
+ */
+function file_extract_entity_base_field_info(\Drupal\Core\Entity\EntityTypeInterface $entity_type) {
+  if ($entity_type->id() == 'file') {
+    $fields = array();
+
+    $fields['file_extract_content'] = FieldDefinition::create('text_extracted')
+      ->setLabel(t('Processed text'))
+      ->setComputed(TRUE);
+
+    return $fields;
+  }
+
+}
