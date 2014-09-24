@@ -41,4 +41,8 @@ class TextExtractedItem extends TextItemBase {
 
   }
 
+  public function getValue($include_computed = FALSE) {
+    return parent::getValue(TRUE);
+  }
+
 }
