@@ -32,7 +32,7 @@ class TextExtracted extends TypedData {
        * @var $item FileInterface
        */
       $filepath = drupal_realpath($source->getFileUri());
-      if ($filepath) {
+      if ($filepath && $this->isExtractable($source)) {
         try {
           $wrapper = new \TikaWrapper(drupal_realpath($source->getFileUri()));
           $this->processed = $wrapper->getText();
@@ -48,6 +48,20 @@ class TextExtracted extends TypedData {
     }
 
     return $this->processed;
+  }
+
+  protected function isExtractable(FileInterface $file) {
+    $type = explode('/', $file->getMimeType());
+
+    if ($file->getMimeType() == 'application/zip') {
+      return FALSE;
+    }
+
+    if ($type[0] == 'video') {
+      return FALSE;
+    }
+
+    return TRUE;
   }
 
 }
