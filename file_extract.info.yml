@@ -3,3 +3,5 @@ description: Extract content from files.
 core: 8.x
 type: module
 package: File
+dependencies:
+  - text
