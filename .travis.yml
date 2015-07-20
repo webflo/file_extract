@@ -1,0 +1,48 @@
+language: php
+
+php:
+  - 5.5
+  - 5.6
+  - 7
+
+matrix:
+  allow_failures:
+    - php: 7
+
+sudo: false
+
+env:
+  - PATH=$PATH:/home/travis/.composer/vendor/bin
+
+script:
+  # Update Composer.
+  - composer self-update
+  - cd $TRAVIS_BUILD_DIR
+  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - git branch build-$TRAVIS_COMMIT $TRAVIS_COMMIT
+  - git branch -a
+
+  # Download Drupal core.
+  - cd $TRAVIS_BUILD_DIR/..
+  - composer create-project drupal-composer/drupal-project:8.x-dev drupal --stability dev --no-interaction --no-install
+
+  # Update to Drupal dev
+  - cd drupal
+  - composer config --unset repositories.0
+  - composer -vvv config repositories.build vcs $TRAVIS_BUILD_DIR
+  - composer -vvv config repositories.drupal_packagist composer https://packagist.drupal-composer.org
+
+  # Update drupal/core and require "the module under test"
+  - composer -vvv require drupal/core:8.0.x-dev drupal/file_extract:dev-build-$TRAVIS_COMMIT@dev
+
+  # Fix run-tests.sh's output. See https://www.drupal.org/node/2189345.
+  - cd $TRAVIS_BUILD_DIR/../drupal/web
+  - curl https://www.drupal.org/files/issues/2189345-61.patch | git apply
+
+  # Install Apache.
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+
+  # Install Drupal
+  - cd $TRAVIS_BUILD_DIR/../drupal/web
+  - ../vendor/drush/drush/drush si --db-url=mysql://root:@127.0.0.1/drupal --account-pass=admin -y
