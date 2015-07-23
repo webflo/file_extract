@@ -1,5 +1,6 @@
 {
   "name": "drupal/file_extract",
+  "description": "Extract content from files.",
   "type": "drupal-module",
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
@@ -11,5 +12,10 @@
       "type": "vcs",
       "url": "https://github.com/webflo/tika-client.git"
     }
-  ]
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-1.x": "8.1.x-dev"
+    }
+  }
 }
