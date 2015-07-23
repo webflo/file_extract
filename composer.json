@@ -4,7 +4,7 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "require": {
-    "marcelomx/tika-client": "dev-master"
+    "marcelomx/tika-client": "~1.0"
   },
   "repositories": [
     {
